@@ -1,5 +1,9 @@
 ﻿using GoFPractice.GoF.AbstractFactory;
+using GoFPractice.GoF.Adapter;
+using GoFPractice.GoF.Bridge;
 using GoFPractice.GoF.Builder;
+using GoFPractice.GoF.Decorator;
+using GoFPractice.GoF.Facade;
 using GoFPractice.GoF.Factory;
 using GoFPractice.GoF.Prototype;
 
@@ -70,5 +74,48 @@ var clone = (FatHuman)fatHuman.Clone();
 clone.ComplexType = ComplexType.Slim;
 
 Console.WriteLine($"{fatHuman.ComplexType}\n{clone.ComplexType}");
+
+#endregion
+
+#region Adapter
+
+var phone = new PhoneAdapter();
+Console.WriteLine(phone.GetPhoneModel());
+
+#endregion
+
+#region Bridge
+
+var log = new ApplicationLog();
+log.Message = "Log";
+
+log.RegisterLog = new ConsoleLogger();
+log.LogMessage();
+
+log.RegisterLog = new FileLogger();
+log.LogMessage();
+
+#endregion
+
+#region Decorator
+
+var computer = new Computer();
+Console.WriteLine(computer.ToString());
+
+var gamingPC = new GamingComputer(computer);
+gamingPC.AddedPrice = 1000;
+Console.WriteLine(gamingPC.ToString());
+
+var officePC = new OfficeComputer(gamingPC);
+officePC.CompanyPrefix = "UA";
+Console.WriteLine(officePC.ToString());
+
+#endregion
+
+#region Facade
+
+var game = new GameFacade();
+game.LaunchGame();
+game.StopGame();
 
 #endregion
