@@ -2,10 +2,13 @@
 using GoFPractice.GoF.Adapter;
 using GoFPractice.GoF.Bridge;
 using GoFPractice.GoF.Builder;
+using GoFPractice.GoF.Composite;
 using GoFPractice.GoF.Decorator;
 using GoFPractice.GoF.Facade;
 using GoFPractice.GoF.Factory;
+using GoFPractice.GoF.Flyweight;
 using GoFPractice.GoF.Prototype;
+using GoFPractice.GoF.Proxy;
 
 #region Factory
 
@@ -99,7 +102,7 @@ log.LogMessage();
 
 #region Decorator
 
-var computer = new Computer();
+var computer = new GoFPractice.GoF.Decorator.Computer();
 Console.WriteLine(computer.ToString());
 
 var gamingPC = new GamingComputer(computer);
@@ -117,5 +120,55 @@ Console.WriteLine(officePC.ToString());
 var game = new GameFacade();
 game.LaunchGame();
 game.StopGame();
+
+#endregion
+
+#region Flyweight
+
+var gangs = new List<IGang?>();
+var gangFactory = new GangFactory();
+gangs.Add(gangFactory.GetGang("Bloods"));
+gangs.Add(gangFactory.GetGang("Rifa"));
+gangs.Add(gangFactory.GetGang("Bloods"));
+gangs.Add(gangFactory.GetGang("Rifa"));
+gangs.Add(gangFactory.GetGang("Bloods"));
+gangs.Add(gangFactory.GetGang("Rifa"));
+
+foreach (var gang in gangs)
+{
+    if (gang != null)
+    {
+        gang.GetName();
+        gang.GetColor();
+    }
+}
+
+Console.WriteLine($"Count of created object: {gangFactory.GetGangsCount()}");
+
+#endregion
+
+#region Proxy
+
+var proxy = new ProxyAdress();
+Console.WriteLine(proxy.GetAdress());
+
+#endregion
+
+#region Composite
+
+var supervisor = new Supervisor()
+{
+    CPU = "20",
+    GPU = "24",
+    RAM = "128",
+    Computers = new List<GoFPractice.GoF.Composite.IComputer>()
+    {
+        new GoFPractice.GoF.Composite.Computer { CPU = "8", GPU = "12", RAM = "64" },
+        new GoFPractice.GoF.Composite.Computer { CPU = "6", GPU = "8", RAM = "32" },
+        new GoFPractice.GoF.Composite.Computer { CPU = "6", GPU = "6", RAM = "16" },
+    }
+};
+
+supervisor.ShowDetails();
 
 #endregion
