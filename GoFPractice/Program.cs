@@ -2,6 +2,7 @@
 using GoFPractice.GoF.Adapter;
 using GoFPractice.GoF.Bridge;
 using GoFPractice.GoF.Builder;
+using GoFPractice.GoF.ChainOfResponsibility;
 using GoFPractice.GoF.Composite;
 using GoFPractice.GoF.Decorator;
 using GoFPractice.GoF.Facade;
@@ -172,3 +173,20 @@ var supervisor = new Supervisor()
 supervisor.ShowDetails();
 
 #endregion
+
+#region Chain of responsibility
+
+var request = new BanRequest();
+request.BanType = BanType.Permanent;
+
+var helper = new Helper();
+var admin = new Admin();
+var superAdmin = new SuperAdmin();
+
+admin.NextHandler = superAdmin;
+helper.NextHandler = admin;
+
+helper.HandleBanRequest(request);
+
+#endregion
+
