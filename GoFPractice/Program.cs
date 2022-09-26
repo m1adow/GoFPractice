@@ -10,6 +10,7 @@ using GoFPractice.GoF.Factory;
 using GoFPractice.GoF.Flyweight;
 using GoFPractice.GoF.Prototype;
 using GoFPractice.GoF.Proxy;
+using GoFPractice.GoF.Strategy;
 
 #region Factory
 
@@ -190,3 +191,20 @@ helper.HandleBanRequest(request);
 
 #endregion
 
+#region Strategy
+
+var pc = new PCShop();
+var bakery = new Bakery();
+var supermarket = new Supermarket();
+
+var shops = new List<Shop>
+{
+    new Shop(pc),
+    new Shop(bakery),
+    new Shop(supermarket)
+};
+
+foreach (var shop in shops)
+    shop.Sell();
+
+#endregion
